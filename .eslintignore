@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+.eslintrc.js
+# production
+dist
+/.vscode
+lib
+es
+.umi
+.github
+scripts
+webpack.config.js
+jest.config.js
+commitlint.config.js
+.prettierrc.js
+.cz-config.js

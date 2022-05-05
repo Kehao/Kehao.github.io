@@ -1,0 +1,57 @@
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+.tag_template: &tag
+  tags:
+    - biosanfront
+
+.only_template: &only
+  only:
+    - v1.0.0-dev
+
+cache:
+  key: biosanfront-cache
+  paths:
+    - node_modules
+    - packages/components/node_modules
+    - packages/hooks/node_modules
+    - packages/utils/node_modules
+
+install-job:
+  stage: install
+  <<: *tag
+  <<: *only
+  script:
+    - npm run install:modules
+
+test-job:
+  stage: test
+  <<: *tag
+  <<: *only
+  before_script:
+    - if [ ! -d node_modules ];then npm run install:modules;fi # 不存在 node_modules 时（即缓存失效时）重新 install
+  script:
+    - npm run test
+
+build-job:
+  stage: build
+  <<: *tag
+  <<: *only
+  before_script:
+    - if [ ! -d node_modules ];then npm run install:modules;fi # 不存在 node_modules 时（即缓存失效时）重新 install
+  script:
+    - npm run docs:build
+  artifacts:
+    expire_in: 30 mins
+    paths:
+      - docs-dist
+
+deploy-job:
+  stage: deploy
+  <<: *tag
+  <<: *only
+  script:
+    - scp -r ./docs-dist/* root@172.17.90.96:/root/biosanfront/dist

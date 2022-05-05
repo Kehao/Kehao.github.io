@@ -1,0 +1,18 @@
+# source
+src/
+docs/
+
+# prettier
+.prettierrc
+.editorconfig
+.prettierignore
+
+# umi
+.umirc.ts
+
+# ts
+tsconfig.json
+typings.d.ts
+
+# father-build
+.fatherrc.ts
