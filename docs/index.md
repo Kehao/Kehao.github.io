@@ -1,6 +1,6 @@
 ---
 hero:
-  title: 博圣大前端框架
+  title: 大前端框架
   desc: 高效、稳定、便捷
   actions:
     - text: 快速上手
